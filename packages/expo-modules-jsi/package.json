@@ -1,0 +1,40 @@
+{
+  "name": "expo-modules-jsi",
+  "title": "Expo Modules JSI",
+  "version": "0.0.1",
+  "description": "JavaScript Interface (JSI) in Swift for Expo Modules",
+  "sideEffects": false,
+  "scripts": {
+    "build": "expo-module build",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module"
+  },
+  "homepage": "https://docs.expo.dev/modules",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/expo/expo.git",
+    "directory": "packages/expo-modules-jsi"
+  },
+  "keywords": [
+    "expo",
+    "react-native",
+    "native",
+    "modules",
+    "jsi"
+  ],
+  "author": "650 Industries, Inc.",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "expo-module-scripts": "^5.0.7"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  }
+}

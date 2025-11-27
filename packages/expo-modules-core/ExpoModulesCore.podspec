@@ -70,20 +70,21 @@ Pod::Spec.new do |s|
   end
   # Swift/Objective-C compatibility
   s.pod_target_xcconfig = {
-    'USE_HEADERMAP' => 'YES',
+    # 'USE_HEADERMAP' => 'YES',
     'DEFINES_MODULE' => 'YES',
     'CLANG_CXX_LANGUAGE_STANDARD' => 'c++20',
     'SWIFT_COMPILATION_MODE' => 'wholemodule',
-    'OTHER_SWIFT_FLAGS' => "$(inherited) #{new_arch_enabled ? new_arch_compiler_flags : ''}",
+    'OTHER_SWIFT_FLAGS' => "$(inherited) #{new_arch_enabled ? new_arch_compiler_flags : ''} -Xfrontend -clang-header-expose-decls=has-expose-attr",
     'HEADER_SEARCH_PATHS' => header_search_paths.join(' '),
     'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) EXPO_MODULES_CORE_VERSION=' + package['version'],
+    'SWIFT_OBJC_INTEROP_MODE' => 'objcxx',
   }
-  s.user_target_xcconfig = {
-    "HEADER_SEARCH_PATHS" => [
-      '"${PODS_CONFIGURATION_BUILD_DIR}/ExpoModulesCore/Swift Compatibility Header"',
-      '"$(PODS_ROOT)/Headers/Private/Yoga"', # Expo.h -> ExpoModulesCore-umbrella.h -> Fabric ViewProps.h -> Private Yoga headers
-    ],
-  }
+  # s.user_target_xcconfig = {
+  #   "HEADER_SEARCH_PATHS" => [
+  #     '"${PODS_CONFIGURATION_BUILD_DIR}/ExpoModulesCore/Swift Compatibility Header"',
+  #     '"$(PODS_ROOT)/Headers/Private/Yoga"', # Expo.h -> ExpoModulesCore-umbrella.h -> Fabric ViewProps.h -> Private Yoga headers
+  #   ],
+  # }
 
   if use_hermes
     s.dependency 'hermes-engine'
@@ -104,7 +105,16 @@ Pod::Spec.new do |s|
   s.source_files = 'ios/**/*.{h,m,mm,swift,cpp}', 'common/cpp/**/*.{h,cpp}'
   s.exclude_files = ['ios/JSI', 'ios/Tests', 'common/cpp/JSI']
   s.compiler_flags = compiler_flags
-  s.private_header_files = ['ios/**/*+Private.h', 'ios/**/Swift.h']
+
+  s.private_header_files = [
+    'common/**/*.h',
+    'ios/**/ExpoBridgeModule.h',
+    'ios/**/SwiftUIViewProps.h',
+    # 'ios/**/SwiftUIVirtualViewObjC.h',
+    'ios/**/EXLegacyExpoViewProtocol.h',
+    'ios/**/*+Private.h',
+    'ios/**/Swift.h'
+  ]
 
   s.test_spec 'Tests' do |test_spec|
     test_spec.dependency 'ExpoModulesTestCore'

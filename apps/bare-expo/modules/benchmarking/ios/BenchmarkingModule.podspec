@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.platforms      = {
     :ios => '15.1',
   }
-  s.swift_version  = '5.9'
+  s.swift_version  = '6.0'
   s.source         = { git: 'https://github.com/expo/expo.git' }
   s.static_framework = true
 
@@ -21,5 +21,14 @@ Pod::Spec.new do |s|
   
   s.dependency 'ExpoModulesCore'
 
-  install_modules_dependencies(s)
+  s.pod_target_xcconfig = {
+    # 'DEFINES_MODULE' => 'YES',
+    # 'CLANG_CXX_LANGUAGE_STANDARD' => 'c++20',
+    # 'SWIFT_COMPILATION_MODE' => 'wholemodule',
+    # 'OTHER_SWIFT_FLAGS' => '-Xfrontend -clang-header-expose-decls=has-expose-attr',
+    # 'SWIFT_OBJC_INTEROP_MODE' => 'objcxx',
+    'HEADER_SEARCH_PATHS' => [
+      '"${PODS_CONFIGURATION_BUILD_DIR}/ExpoModulesCore/Swift Compatibility Header"'
+    ]
+  }
 end
