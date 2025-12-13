@@ -396,6 +396,7 @@ async function preparePackageJson(
     dependencies: {
       ...expoResolutions,
       ...packageJson.dependencies,
+      'react-native': '0.82.1',
     },
     devDependencies: {
       '@types/react': '~19.0.10',
@@ -417,7 +418,7 @@ async function preparePackageJson(
       ...packageJson,
       dependencies: {
         ...packageJson.dependencies,
-        'react-native': 'npm:react-native-tvos@0.82.0-0rc5',
+        'react-native': 'npm:react-native-tvos@0.82.1-0',
         '@react-native-tvos/config-tv': '^0.1.4',
       },
       expo: {
